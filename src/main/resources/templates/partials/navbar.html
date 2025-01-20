@@ -1,0 +1,29 @@
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top custom-navbar" aria-label="Fourth navbar example">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Inovatech</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <!-- Espaço para outros links, se necessário -->
+                </ul>
+                <div th:if="${nomeCliente == null}">
+                    <a href="/login" class="btn btn-outline-light me-2">Login</a>
+                    <a href="/cadastro" class="btn btn-outline-light">Cadastre-se</a>
+                </div>
+                <div class="dropdown" th:if="${nomeCliente != null}">
+                    <a href="" class="d-block link-body-emphasis text-white dropdown-toggle show" data-bs-toggle="dropdown" aria-expanded="true">
+                        Olá, <span th:text="${nomeCliente}"></span>!
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/user/">Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

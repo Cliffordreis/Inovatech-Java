@@ -1,0 +1,19 @@
+<div th:if="${param.error}" style="text-align: center;">
+    <p style="color: red;">Credenciais inválidas. Tente novamente.</p>
+</div>
+
+
+<div class="container-fluid d-flex justify-content-center my-5" data-bs-theme="dark">
+    <div id="cad" class="card col-10 col-sm-8 col-md-6 col-lg-4 p-3 text-center">
+        <form th:action="@{/login}" method="post">
+            <div class="mb-5">
+                <h1 class="home">Login</h1>
+            </div>
+
+            <input class="form-control mb-2" type="email" name="username" placeholder="digite seu email" required>
+            <input class="form-control mb-2" type="password" name="password" placeholder="digite sua senha" required>
+            <a class="home nav-link" href="/cadastro"><p>não tem conta? cadastre-se aqui</p></a>
+            <button class="btn btn-transparent">entrar</button>
+        </form>
+    </div>
+</div>
