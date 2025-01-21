@@ -23,34 +23,34 @@ public class PedidoController {
         this.clienteRepository = clienteRepository;  // Corrigido aqui, agora está injetado corretamente
     }
 
-    @PostMapping("/pedido/criar")
-    public String criarPedido(@RequestParam Integer produtoId,
-                              @RequestParam int quantidade,
-                              Authentication authentication,
-                              RedirectAttributes redirectAttributes) {
-        try {
-            String email = authentication.getName();  // Obtém o email do cliente autenticado
-
-            // Busca o cliente pelo email usando a instância injetada do ClienteRepository
-            Cliente cliente = clienteRepository.findByEmailCliente(email);  // Corrigido aqui
-            if (cliente == null) {
-                throw new IllegalArgumentException("Cliente não encontrado");
-            }
-
-            Integer clienteId = cliente.getIdCliente();  // Obtém o clienteId do cliente encontrado
-
-            // Cria o pedido, passando o clienteId, produtoId e quantidade
-            Pedido pedido = pedidoService.criarPedido(clienteId, produtoId, quantidade);  // Passa o clienteId
-
-            // Usando o RedirectAttributes para passar o pedido
-            redirectAttributes.addFlashAttribute("pedido", pedido);
-            return "redirect:/";  // Redireciona para o home
-        } catch (EstoqueInsuficienteException e) {  // Captura a EstoqueInsuficienteException
-            redirectAttributes.addFlashAttribute("erro", e.getMessage());
-            return "redirect:/";  // Retorna para a página inicial com erro
-        } catch (Exception e) {  // Captura outras exceções genéricas
-            redirectAttributes.addFlashAttribute("erro", "Erro ao criar pedido: " + e.getMessage());
-            return "redirect:/";  // Retorna para a página inicial com erro
-        }
-    }
+//    @PostMapping("/pedido/criar")
+//    public String criarPedido(@RequestParam Integer produtoId,
+//                              @RequestParam int quantidade,
+//                              Authentication authentication,
+//                              RedirectAttributes redirectAttributes) {
+//        try {
+//            String email = authentication.getName();  // Obtém o email do cliente autenticado
+//
+//            // Busca o cliente pelo email usando a instância injetada do ClienteRepository
+//            Cliente cliente = clienteRepository.findByEmailCliente(email);  // Corrigido aqui
+//            if (cliente == null) {
+//                throw new IllegalArgumentException("Cliente não encontrado");
+//            }
+//
+//            Integer clienteId = cliente.getIdCliente();  // Obtém o clienteId do cliente encontrado
+//
+//            // Cria o pedido, passando o clienteId, produtoId e quantidade
+//            Pedido pedido = pedidoService.criarPedido(clienteId, produtoId, quantidade);  // Passa o clienteId
+//
+//            // Usando o RedirectAttributes para passar o pedido
+//            redirectAttributes.addFlashAttribute("pedido", pedido);
+//            return "redirect:/";  // Redireciona para o home
+//        } catch (EstoqueInsuficienteException e) {  // Captura a EstoqueInsuficienteException
+//            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+//            return "redirect:/";  // Retorna para a página inicial com erro
+//        } catch (Exception e) {  // Captura outras exceções genéricas
+//            redirectAttributes.addFlashAttribute("erro", "Erro ao criar pedido: " + e.getMessage());
+//            return "redirect:/";  // Retorna para a página inicial com erro
+//        }
+//    }
 }

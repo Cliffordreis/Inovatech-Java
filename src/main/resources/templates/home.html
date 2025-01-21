@@ -27,11 +27,16 @@
                 <h5 class="card-title">Redmi Note 13</h5>
                 <p>256gb 8gb ram</p>
                 <p class="card-text">R$: 1.299,99</p>
-                <form action="/pedido/criar" method="post">
-                    <input type="hidden" name="produtoId" th:value="1">
-                    <input type="number" name="quantidade">
-                    <a><button class="btn btn-transparent">Comprar</button></a>
+                <form th:action="@{/carrinho/adicionar}" method="post">
+                    <input type="hidden" name="produtoId" value="1">
+                    <input type="hidden" name="nome" value="Redmi Note 13">
+                    <input type="hidden" name="preco" value="1299.99">
+                    <div class="input-group">
+                        <input class="form-control test" type="number" name="quantidade" min="1" max="100" value="1" step="1" required>
+                        <button type="submit" class="btn btn-transparent" >Comprar</button>
+                    </div>
                 </form>
+
             </div>
         </div>
     </div>
@@ -42,8 +47,14 @@
                 <h5 class="card-title">Oppo Find X6 Pro</h5>
                 <p>256gb 8gb ram</p>
                 <p class="card-text">R$: 2.499,99</p>
-                <form action="/addcarrinho/2" method="post">
-                    <a><button class="btn btn-transparent">Comprar</button></a>
+                <form th:action="@{/carrinho/adicionar}" method="post">
+                    <input type="hidden" name="produtoId" value="2">
+                    <input type="hidden" name="nome" value="Oppo Find X6 Pro">
+                    <input type="hidden" name="preco" value="2499.99">
+                    <div class="input-group" >
+                        <input class="form-control test" type="number" name="quantidade" min="1" max="100" value="1" step="1" required>
+                        <button type="submit" class="btn btn-transparent" >Comprar</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -55,8 +66,14 @@
                 <h5 class="card-title">Realm Note 50</h5>
                 <p>128gb 4gb ram</p>
                 <p class="card-text">R$: 699,99</p>
-                <form action="/addcarrinho/3" method="post">
-                    <button type="submit" class="btn btn-transparent">Comprar</button>
+                <form th:action="@{/carrinho/adicionar}" method="post">
+                    <input type="hidden" name="produtoId" value="3">
+                    <input type="hidden" name="nome" value="Realm Note 50">
+                    <input type="hidden" name="preco" value="699.99">
+                    <div class="input-group" >
+                        <input class="form-control test" type="number" name="quantidade" min="1" max="100" value="1" step="1" required>
+                        <button type="submit" class="btn btn-transparent" >Comprar</button>
+                    </div>
                 </form>
             </div>
         </div>
