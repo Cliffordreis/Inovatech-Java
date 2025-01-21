@@ -1,3 +1,7 @@
+<div th:if="${erro != null}" class="alert alert-danger">
+    <span th:text="${erro}"></span>
+</div>
+
 <section class="d-flex align-items-center vh-100 text-white">
     <div class="container">
         <h1 class="display-1 fw-bold text-start">O MUNDO <BR> EM SUAS MÃOS</h1>
@@ -23,8 +27,9 @@
                 <h5 class="card-title">Redmi Note 13</h5>
                 <p>256gb 8gb ram</p>
                 <p class="card-text">R$: 1.299,99</p>
-                <form action="/addcarrinho/1" method="post">
-                    <input hidden name="cod" value="1">
+                <form action="/pedido/criar" method="post">
+                    <input type="hidden" name="produtoId" th:value="1">
+                    <input type="number" name="quantidade">
                     <a><button class="btn btn-transparent">Comprar</button></a>
                 </form>
             </div>
@@ -38,7 +43,6 @@
                 <p>256gb 8gb ram</p>
                 <p class="card-text">R$: 2.499,99</p>
                 <form action="/addcarrinho/2" method="post">
-                    <input hidden name="cod" value="2">
                     <a><button class="btn btn-transparent">Comprar</button></a>
                 </form>
             </div>
@@ -52,7 +56,6 @@
                 <p>128gb 4gb ram</p>
                 <p class="card-text">R$: 699,99</p>
                 <form action="/addcarrinho/3" method="post">
-                    <input hidden name="cod" value="3">
                     <button type="submit" class="btn btn-transparent">Comprar</button>
                 </form>
             </div>

@@ -2,8 +2,12 @@ package com.Inovatech.Java.Inovatech.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 
+@Setter
+@Getter
 @Entity
 @Table(name = "Cliente")
 @AllArgsConstructor
@@ -22,40 +26,14 @@ public class Cliente {
 
     }
 
-    public String getnomeCliente() {
-        return nomeCliente;
+    // Getters e setters
+
+    public Integer getIdCliente() {
+        return idCliente;
     }
 
-    public String getSenhaCliente() {
-        return senhaCliente;
-    }
-
-    public void setSenhaCliente(String senhaCliente) {
-        this.senhaCliente = senhaCliente;
-    }
-
-    public String getEmailCliente() {
-        return emailCliente;
-    }
-
-    public void setEmailCliente(String emailCliente) {
-        this.emailCliente = emailCliente;
-    }
-
-    public String getCpfCliente() {
-        return cpfCliente;
-    }
-
-    public void setCpfCliente(String cpfCliente) {
-        this.cpfCliente = cpfCliente;
-    }
-
-    public String getSobrenomeCliente() {
-        return sobrenomeCliente;
-    }
-
-    public void setSobrenomeCliente(String sobrenomeCliente) {
-        this.sobrenomeCliente = sobrenomeCliente;
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getNomeCliente() {
@@ -66,12 +44,35 @@ public class Cliente {
         this.nomeCliente = nomeCliente;
     }
 
-    public Integer getIdCliente() {
-        return idCliente;
+    public String getSobrenomeCliente() {
+        return sobrenomeCliente;
     }
 
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    public void setSobrenomeCliente(String sobrenomeCliente) {
+        this.sobrenomeCliente = sobrenomeCliente;
     }
-// Getters e setters
+
+    public String getCpfCliente() {
+        return cpfCliente;
+    }
+
+    public void setCpfCliente(String cpfCliente) {
+        this.cpfCliente = cpfCliente;
+    }
+
+    public String getEmailCliente() {
+        return emailCliente;
+    }
+
+    public void setEmailCliente(String emailCliente) {
+        this.emailCliente = emailCliente;
+    }
+
+    public String getSenhaCliente() {
+        return senhaCliente;
+    }
+
+    public void setSenhaCliente(String senhaCliente) {
+        this.senhaCliente = senhaCliente;
+    }
 }
