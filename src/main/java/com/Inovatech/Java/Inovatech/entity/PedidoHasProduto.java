@@ -19,29 +19,30 @@ public class PedidoHasProduto {
         @Column(name = "Produto_idProduto")
         private Integer produtoId;
 
-        // Getters e Setters, hashCode e equals
-        public Integer getPedidoId() {
-            return pedidoId;
-        }
-
-        public void setPedidoId(Integer pedidoId) {
-            this.pedidoId = pedidoId;
-        }
-
-        public Integer getClienteId() {
-            return clienteId;
+        // Corrigir setters para atribuição dos valores
+        public void setProdutoId(Integer produtoId) {
+            this.produtoId = produtoId;
         }
 
         public void setClienteId(Integer clienteId) {
             this.clienteId = clienteId;
         }
 
-        public Integer getProdutoId() {
-            return produtoId;
+        public void setPedidoId(Integer pedidoId) {
+            this.pedidoId = pedidoId;
         }
 
-        public void setProdutoId(Integer produtoId) {
-            this.produtoId = produtoId;
+        // Getters, hashCode e equals
+        public Integer getPedidoId() {
+            return pedidoId;
+        }
+
+        public Integer getClienteId() {
+            return clienteId;
+        }
+
+        public Integer getProdutoId() {
+            return produtoId;
         }
 
         @Override
@@ -49,9 +50,9 @@ public class PedidoHasProduto {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             PedidoHasProdutoId that = (PedidoHasProdutoId) o;
-            return pedidoId.equals(that.pedidoId) &&
-                    clienteId.equals(that.clienteId) &&
-                    produtoId.equals(that.produtoId);
+            return Objects.equals(pedidoId, that.pedidoId) &&
+                    Objects.equals(clienteId, that.clienteId) &&
+                    Objects.equals(produtoId, that.produtoId);
         }
 
         @Override
@@ -73,6 +74,9 @@ public class PedidoHasProduto {
     @ManyToOne
     @JoinColumn(name = "Produto_idProduto", insertable = false, updatable = false)
     private Produto produto;
+
+    @Column(name = "quantidade")
+    private Integer quantidade;  // Novo campo para armazenar a quantidade de cada item
 
     // Getters e Setters
     public PedidoHasProdutoId getId() {
@@ -97,5 +101,13 @@ public class PedidoHasProduto {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }

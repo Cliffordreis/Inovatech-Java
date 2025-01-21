@@ -18,10 +18,8 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPedido;
 
-    private String pedidoDescricao;
     private BigDecimal pedidoValor;
     private LocalDateTime pedidoDataHora;
-    private Integer pedidoQuantidade;
 
     @ManyToOne
     @JoinColumn(name = "Cliente_idCliente", nullable = false)
@@ -42,28 +40,12 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public String getPedidoDescricao() {
-        return pedidoDescricao;
-    }
-
-    public void setPedidoDescricao(String pedidoDescricao) {
-        this.pedidoDescricao = pedidoDescricao;
-    }
-
     public BigDecimal getPedidoValor() {
         return pedidoValor;
     }
 
     public void setPedidoValor(BigDecimal pedidoValor) {
         this.pedidoValor = pedidoValor;
-    }
-
-    public Integer getPedidoQuantidade() {
-        return pedidoQuantidade;
-    }
-
-    public void setPedidoQuantidade(Integer pedidoQuantidade) {
-        this.pedidoQuantidade = pedidoQuantidade;
     }
 
     public LocalDateTime getPedidoDataHora() {

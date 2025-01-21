@@ -1,7 +1,13 @@
 package com.Inovatech.Java.Inovatech.controller;
 
 import com.Inovatech.Java.Inovatech.entity.CarrinhoItem;
+import com.Inovatech.Java.Inovatech.entity.Cliente;
+import com.Inovatech.Java.Inovatech.service.PedidoService; // Importando o serviço
+import com.Inovatech.Java.Inovatech.repositories.ClienteRepository; // Importando o repositório Cliente
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired; // Adicionando a importação
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder; // Para pegar o usuário autenticado
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +19,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/carrinho")
 public class CarrinhoController {
+
+    @Autowired
+    private PedidoService pedidoService; // Injetando o PedidoService
+
+    @Autowired
+    private ClienteRepository clienteRepository; // Injetando o ClienteRepository
 
     @GetMapping
     public String visualizarCarrinho(HttpSession session, Model model) {
@@ -113,17 +125,35 @@ public class CarrinhoController {
         return "redirect:/carrinho"; // Redireciona para a página do carrinho
     }
 
-
     @PostMapping("/finalizar")
     public String finalizarPedido(HttpSession session) {
+        // Obtém o email do usuário autenticado
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName(); // Aqui é o email do usuário
+
+        // Busca o cliente no banco de dados com o email
+        Cliente cliente = clienteRepository.findByEmailCliente(email); // Agora utilizando o findByEmail
+
+        if (cliente == null) {
+            return "redirect:/carrinho?erro=Cliente não encontrado";
+        }
+
         List<CarrinhoItem> carrinho = (List<CarrinhoItem>) session.getAttribute("carrinho");
         if (carrinho == null || carrinho.isEmpty()) {
             return "redirect:/carrinho?erro=Carrinho está vazio";
         }
 
-        // Processar o carrinho (ex.: salvar no banco de dados)
+        try {
+            // Chama o serviço para finalizar o pedido, passando o clienteId
+            pedidoService.finalizarPedido(carrinho, cliente.getIdCliente()); // Passando o clienteId
 
-        session.removeAttribute("carrinho");
-        return "redirect:/carrinho?sucesso=Pedido finalizado com sucesso";
+            // Limpa o carrinho após finalizar
+            session.removeAttribute("carrinho");
+            return "redirect:/carrinho?sucesso=Pedido finalizado com sucesso";
+
+        } catch (Exception e) {
+            return "redirect:/carrinho?erro=" + e.getMessage();
+        }
     }
+
 }
