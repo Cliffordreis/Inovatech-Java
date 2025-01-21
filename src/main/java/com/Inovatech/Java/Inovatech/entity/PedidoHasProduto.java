@@ -8,8 +8,10 @@ import java.util.Objects;
 @Table(name = "Pedido_has_Produto")
 public class PedidoHasProduto {
 
+    // Classe interna para chave composta
     @Embeddable
     public static class PedidoHasProdutoId implements Serializable {
+
         @Column(name = "Pedido_idPedido")
         private Integer pedidoId;
 
@@ -19,32 +21,32 @@ public class PedidoHasProduto {
         @Column(name = "Produto_idProduto")
         private Integer produtoId;
 
-        // Corrigir setters para atribuição dos valores
-        public void setProdutoId(Integer produtoId) {
-            this.produtoId = produtoId;
-        }
-
-        public void setClienteId(Integer clienteId) {
-            this.clienteId = clienteId;
+        // Getters e setters
+        public Integer getPedidoId() {
+            return pedidoId;
         }
 
         public void setPedidoId(Integer pedidoId) {
             this.pedidoId = pedidoId;
         }
 
-        // Getters, hashCode e equals
-        public Integer getPedidoId() {
-            return pedidoId;
-        }
-
         public Integer getClienteId() {
             return clienteId;
+        }
+
+        public void setClienteId(Integer clienteId) {
+            this.clienteId = clienteId;
         }
 
         public Integer getProdutoId() {
             return produtoId;
         }
 
+        public void setProdutoId(Integer produtoId) {
+            this.produtoId = produtoId;
+        }
+
+        // Métodos hashCode e equals para garantir a comparação correta de chaves compostas
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -61,9 +63,11 @@ public class PedidoHasProduto {
         }
     }
 
+    // Usando a chave composta
     @EmbeddedId
     private PedidoHasProdutoId id;
 
+    // Relacionamento com Pedido
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "Pedido_idPedido", referencedColumnName = "idPedido", insertable = false, updatable = false),
@@ -71,12 +75,14 @@ public class PedidoHasProduto {
     })
     private Pedido pedido;
 
+    // Relacionamento com Produto
     @ManyToOne
     @JoinColumn(name = "Produto_idProduto", insertable = false, updatable = false)
     private Produto produto;
 
+    // Atributo de quantidade
     @Column(name = "quantidade")
-    private Integer quantidade;  // Novo campo para armazenar a quantidade de cada item
+    private Integer quantidade;
 
     // Getters e Setters
     public PedidoHasProdutoId getId() {

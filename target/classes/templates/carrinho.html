@@ -1,0 +1,48 @@
+<div th:if="${param.erro}">
+    <div class="alert alert-danger" role="alert">
+        <span th:text="${param.erro}"></span>
+    </div>
+</div>
+
+<div class="container-fluid d-flex justify-content-center my-5" data-bs-theme="dark">
+    <div id="cad" class="card col-10 col-sm-8 col-md-6 col-lg-4 p-3 text-center">
+        <h1>Seu Carrinho</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Preço Unitário</th>
+                <th>Quantidade</th>
+                <th>Subtotal</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${carrinho}">
+                <td th:text="${item.nome}"></td>
+                <td th:text="${item.precoUnitario}"></td>
+                <td>
+                    <!-- Campo de Quantidade com botões para aumentar ou diminuir -->
+                    <form th:action="@{/carrinho/alterarQuantidade}" method="post" class="d-inline">
+                        <input type="hidden" name="produtoId" th:value="${item.produtoId}">
+                        <button type="submit" name="quantidade" value="decrease">-</button> <!-- Diminuir quantidade -->
+                        <span th:text="${item.quantidade}"></span>
+                        <button type="submit" name="quantidade" value="increase">+</button> <!-- Aumentar quantidade -->
+                    </form>
+                </td>
+                <td th:text="${item.subtotal}"></td>
+                <td>
+                    <form th:action="@{/carrinho/remover}" method="post">
+                        <input type="hidden" name="produtoId" th:value="${item.produtoId}">
+                        <button type="submit">Remover</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h2>Total: <span th:text="${total}"></span></h2>
+        <form th:action="@{/carrinho/finalizar}" method="post">
+            <button type="submit">Finalizar Pedido</button>
+        </form>
+    </div>
+</div>

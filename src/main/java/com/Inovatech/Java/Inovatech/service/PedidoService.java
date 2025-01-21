@@ -41,7 +41,7 @@ public class PedidoService {
         pedido.setPedidoDataHora(LocalDateTime.now());
         pedido.setPedidoValor(calcularTotalCarrinho(carrinho));
 
-        // Salva o pedido no banco
+        // Salva o pedido no banco (garante que o idPedido seja gerado)
         pedido = pedidoRepository.save(pedido);
 
         // Associa os produtos ao pedido e atualiza o estoque
@@ -54,32 +54,30 @@ public class PedidoService {
                 throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getProdutoDescricao());
             }
 
-            // Cria a associação do produto com o pedido
+            // Criação da associação do produto com o pedido
             PedidoHasProduto pedidoHasProduto = new PedidoHasProduto();
-            PedidoHasProduto.PedidoHasProdutoId id = new PedidoHasProduto.PedidoHasProdutoId();
-            id.setPedidoId(pedido.getIdPedido());
-            id.setClienteId(cliente.getIdCliente());  // Garantir que o clienteId seja passado
-            id.setProdutoId(produto.getIdProduto());
 
-            pedidoHasProduto.setId(id); // Definindo a chave composta
+            // Definindo a chave composta
+            PedidoHasProduto.PedidoHasProdutoId id = new PedidoHasProduto.PedidoHasProdutoId();
+            id.setPedidoId(pedido.getIdPedido());  // Garantir que o idPedido do pedido seja correto
+            id.setClienteId(cliente.getIdCliente());  // Garantir que o clienteId esteja correto
+            id.setProdutoId(produto.getIdProduto());  // Garantir que o produtoId esteja correto
+
+            // Definindo a chave composta no objeto PedidoHasProduto
+            pedidoHasProduto.setId(id);
+
+            // Definindo o pedido, produto e quantidade
             pedidoHasProduto.setPedido(pedido);
             pedidoHasProduto.setProduto(produto);
-            pedidoHasProduto.setQuantidade(item.getQuantidade()); // Aqui também você pode setar a quantidade do produto
+            pedidoHasProduto.setQuantidade(item.getQuantidade());
 
-            // Atualiza o estoque
-            produto.setProdutoQuantidade(produto.getProdutoQuantidade() - item.getQuantidade());
-            produtoRepository.save(produto);
-
-            // Salva a associação
+            // Salvar a associação
             pedidoHasProdutoRepository.save(pedidoHasProduto);
+
         }
 
         return pedido;
     }
-
-
-
-
 
 
     private BigDecimal calcularTotalCarrinho(List<CarrinhoItem> carrinho) {
