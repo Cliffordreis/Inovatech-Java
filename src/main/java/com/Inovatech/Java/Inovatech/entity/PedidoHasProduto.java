@@ -84,6 +84,7 @@ public class PedidoHasProduto {
     @Column(name = "quantidade")
     private Integer quantidade;
 
+
     // Getters e Setters
     public PedidoHasProdutoId getId() {
         return id;

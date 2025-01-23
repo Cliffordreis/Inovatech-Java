@@ -21,6 +21,8 @@ public class Produto {
     private Integer produtoQuantidade;
 
     // Getters e Setters
+
+
     public Integer getIdProduto() {
         return idProduto;
     }

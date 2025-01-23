@@ -23,10 +23,4 @@ public class PrincipalController {
         return "layouts/main"; // Retorna o layout principal
     }
 
-//    @GetMapping("/carrinho")
-//    public String carrinho(Model model) {
-//        model.addAttribute("content", "carrinho");
-//        return "layouts/main"; // Retorna o layout principal
-//    }
-
 }

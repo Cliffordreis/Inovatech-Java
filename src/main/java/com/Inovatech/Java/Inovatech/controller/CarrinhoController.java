@@ -140,7 +140,7 @@ public class CarrinhoController {
 
         List<CarrinhoItem> carrinho = (List<CarrinhoItem>) session.getAttribute("carrinho");
         if (carrinho == null || carrinho.isEmpty()) {
-            return "redirect:/carrinho?erro=Carrinho está vazio";
+            return "redirect:/carrinho?erro=Carrinho adicione itens no carrinho";
         }
 
         try {
@@ -149,7 +149,7 @@ public class CarrinhoController {
 
             // Limpa o carrinho após finalizar
             session.removeAttribute("carrinho");
-            return "redirect:/carrinho?sucesso=Pedido finalizado com sucesso";
+            return "redirect:/meuspedidos";
 
         } catch (Exception e) {
             return "redirect:/carrinho?erro=" + e.getMessage();

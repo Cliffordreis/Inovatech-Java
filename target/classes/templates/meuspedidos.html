@@ -1,0 +1,46 @@
+<div class="container-fluid d-flex justify-content-center my-4" data-bs-theme="dark">
+    <div id="cad" class="card col-12 col-sm-10 col-md-8 col-lg-6 p-3 mx-auto">
+    <h2 class="m-3">Meus Pedidos</h2>
+        <ul class="list-unstyled">
+            <!-- Itera sobre os pedidos -->
+            <li th:each="pedido : ${pedidos}">
+                <div class="card m-3 test">
+                    <div class="card-header p-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h4 class="mb-0" th:text="'Pedido: ' + ${pedido.idPedido}"></h4>
+                            <!-- Botões alinhados à direita -->
+                            <div class="ms-auto">
+                                <button class="btn btn-transparent">Detalhes</button>
+                                <button
+                                        class="btn btn-transparent ms-3"
+                                        type="button"
+                                        th:attr="data-bs-target='#produtos-' + ${pedido.idPedido}, aria-controls='produtos-' + ${pedido.idPedido}"
+                                        data-bs-toggle="collapse"
+                                        aria-expanded="false">
+                                    Ver Produtos
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Área de produtos (colapso) -->
+                    <div class="collapse card-body p-3" th:attr="id='produtos-' + ${pedido.idPedido}">
+                        <blockquote class="blockquote mb-2">
+                            <!-- Itera sobre os produtos do pedido -->
+                            <div th:each="pedidoHasProduto : ${pedido.pedidoHasProdutos}">
+                                <div class="d-flex align-items-center mb-3">
+                                    <p th:text="'Produto: ' + ${pedidoHasProduto.produto.produtoDescricao}" class="mb-0 me-3"></p>
+                                    <img th:src="@{/img/{id}.png(id=${pedidoHasProduto.produto.idProduto})}" height="60px" width="50px" alt="Produto" class="me-3">
+                                    <p th:text="'Quantidade: ' + ${pedidoHasProduto.quantidade}" class="mb-0 me-3"></p>
+                                    <p th:text="'Valor R$: ' + ${pedidoHasProduto.produto.produtoValor}" class="mb-0"></p>
+                                </div>
+                                <hr class="my-2">
+                            </div>
+                            <p th:text="'Valor total R$: ' + ${pedido.pedidoValor}" style="font-weight: bold;"></p>
+                        </blockquote>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

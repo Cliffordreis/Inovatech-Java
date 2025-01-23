@@ -85,4 +85,18 @@ public class PedidoService {
                 .map(CarrinhoItem::getSubtotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
+    // Método para buscar pedidos de um cliente
+    public List<Pedido> findByCliente_idCliente(Integer idCliente) {
+        return pedidoRepository.findByCliente_idCliente(idCliente);
+    }
+
+    // Método para buscar PedidoHasProduto de um cliente
+    public List<PedidoHasProduto> findByPedido_Cliente_idCliente(Integer idCliente) {
+        return pedidoHasProdutoRepository.findByPedido_Cliente_idCliente(idCliente);
+    }
+    public List<Pedido> getPedidosComProdutos(Integer clienteId) {
+        return pedidoRepository.findPedidosComProdutos(clienteId);
+    }
+
 }

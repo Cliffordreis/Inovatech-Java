@@ -42,14 +42,8 @@ public class ClienteDetailsService implements UserDetailsService {
     }
 
 
-
     // Método para encriptar a senha durante o cadastro
     public String encodePassword(String senha) {
         return passwordEncoder.encode(senha);  // Criptografando a senha
     }
-
-    // Método para verificar se a senha fornecida corresponde à criptografada
-//    public boolean matches(String rawPassword, String encodedPassword) {
-//        return passwordEncoder.matches(rawPassword, encodedPassword);
-//    }
 }

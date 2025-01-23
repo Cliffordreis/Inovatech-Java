@@ -7,15 +7,15 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Pedido")
-@Getter
-@Setter
 @AllArgsConstructor
 public class Pedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pedido_seq")
+    @SequenceGenerator(name = "pedido_seq", sequenceName = "pedido_seq", initialValue = 1000, allocationSize = 1)
     private Integer idPedido;
 
     private BigDecimal pedidoValor;
@@ -28,6 +28,20 @@ public class Pedido {
     public Pedido() {
 
     }
+
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PedidoHasProduto> pedidoHasProdutos;
+
+    // Getter
+    public List<PedidoHasProduto> getPedidoHasProdutos() {
+        return pedidoHasProdutos;
+    }
+
+    // Setter
+    public void setPedidoHasProdutos(List<PedidoHasProduto> pedidoHasProdutos) {
+        this.pedidoHasProdutos = pedidoHasProdutos;
+    }
+
 
 
     // Getters e setters

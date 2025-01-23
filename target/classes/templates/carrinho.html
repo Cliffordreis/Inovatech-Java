@@ -5,9 +5,9 @@
 </div>
 
 <div class="container-fluid d-flex justify-content-center my-5" data-bs-theme="dark">
-    <div id="cad" class="card col-10 col-sm-8 col-md-6 col-lg-4 p-3 text-center">
-        <h1>Seu Carrinho</h1>
-        <table>
+    <div id="cad" class="card col-auto p-3">
+        <h1 class="text-center">Seu Carrinho</h1>
+        <table class=" table-hover align-middle text-center">
             <thead>
             <tr>
                 <th>Produto</th>
@@ -19,30 +19,38 @@
             </thead>
             <tbody>
             <tr th:each="item : ${carrinho}">
-                <td th:text="${item.nome}"></td>
-                <td th:text="${item.precoUnitario}"></td>
+                <!-- Produto com imagem e nome -->
+                <td class="d-flex align-items-center justify-content-start">
+                    <img th:src="@{/img/{id}.png(id=${item.produtoId})}" height="50px" width="50px" alt="Produto" class="me-3">
+                    <span th:text="${item.nome}"></span>
+                </td>
+                <!-- Preço unitário -->
+                <td th:text="'R$: ' + ${item.precoUnitario}"></td>
+                <!-- Quantidade com botões -->
                 <td>
-                    <!-- Campo de Quantidade com botões para aumentar ou diminuir -->
                     <form th:action="@{/carrinho/alterarQuantidade}" method="post" class="d-inline">
                         <input type="hidden" name="produtoId" th:value="${item.produtoId}">
-                        <button type="submit" name="quantidade" value="decrease">-</button> <!-- Diminuir quantidade -->
-                        <span th:text="${item.quantidade}"></span>
-                        <button type="submit" name="quantidade" value="increase">+</button> <!-- Aumentar quantidade -->
+                        <button class="btn btn-transparent" type="submit" name="quantidade" value="decrease">-</button>
+                        <span class="mx-2" th:text="${item.quantidade}"></span>
+                        <button class="btn btn-transparent" type="submit" name="quantidade" value="increase">+</button>
                     </form>
                 </td>
-                <td th:text="${item.subtotal}"></td>
+                <!-- Subtotal -->
+                <td th:text="'R$: ' + ${item.subtotal}"></td>
+                <!-- Ações -->
                 <td>
                     <form th:action="@{/carrinho/remover}" method="post">
                         <input type="hidden" name="produtoId" th:value="${item.produtoId}">
-                        <button type="submit">Remover</button>
+                        <button class="btn btn-danger btn-sm" type="submit">Remover</button>
                     </form>
                 </td>
             </tr>
             </tbody>
         </table>
-        <h2>Total: <span th:text="${total}"></span></h2>
-        <form th:action="@{/carrinho/finalizar}" method="post">
-            <button type="submit">Finalizar Pedido</button>
+        <hr>
+        <h2 class="text-end">Total: <span th:text="'R$: ' + ${total}"></span></h2>
+        <form th:action="@{/carrinho/finalizar}" method="post" class="text-end">
+            <button class="btn btn-success" type="submit">Finalizar Pedido</button>
         </form>
     </div>
 </div>

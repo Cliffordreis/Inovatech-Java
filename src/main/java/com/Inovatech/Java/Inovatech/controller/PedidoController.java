@@ -2,55 +2,55 @@ package com.Inovatech.Java.Inovatech.controller;
 
 import com.Inovatech.Java.Inovatech.entity.Cliente;
 import com.Inovatech.Java.Inovatech.entity.Pedido;
-import com.Inovatech.Java.Inovatech.exception.EstoqueInsuficienteException;
+import com.Inovatech.Java.Inovatech.entity.PedidoHasProduto;
 import com.Inovatech.Java.Inovatech.repositories.ClienteRepository;
 import com.Inovatech.Java.Inovatech.service.PedidoService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.text.DecimalFormat;
+import java.util.List;
 
 @Controller
 public class PedidoController {
 
-    private final PedidoService pedidoService;  // Injetando o PedidoService
-    private final ClienteRepository clienteRepository;  // Injetando o ClienteRepository
+    private final PedidoService pedidoService;
+    private final ClienteRepository clienteRepository;
 
-    // Construtor para injeção do PedidoService e ClienteRepository
-    public PedidoController(PedidoService pedidoService, ClienteRepository clienteRepository) {
+    public PedidoController(PedidoService pedidoService, ClienteRepository clienterepository) {
         this.pedidoService = pedidoService;
-        this.clienteRepository = clienteRepository;  // Corrigido aqui, agora está injetado corretamente
+        this.clienteRepository = clienterepository;
     }
 
-//    @PostMapping("/pedido/criar")
-//    public String criarPedido(@RequestParam Integer produtoId,
-//                              @RequestParam int quantidade,
-//                              Authentication authentication,
-//                              RedirectAttributes redirectAttributes) {
-//        try {
-//            String email = authentication.getName();  // Obtém o email do cliente autenticado
-//
-//            // Busca o cliente pelo email usando a instância injetada do ClienteRepository
-//            Cliente cliente = clienteRepository.findByEmailCliente(email);  // Corrigido aqui
-//            if (cliente == null) {
-//                throw new IllegalArgumentException("Cliente não encontrado");
-//            }
-//
-//            Integer clienteId = cliente.getIdCliente();  // Obtém o clienteId do cliente encontrado
-//
-//            // Cria o pedido, passando o clienteId, produtoId e quantidade
-//            Pedido pedido = pedidoService.criarPedido(clienteId, produtoId, quantidade);  // Passa o clienteId
-//
-//            // Usando o RedirectAttributes para passar o pedido
-//            redirectAttributes.addFlashAttribute("pedido", pedido);
-//            return "redirect:/";  // Redireciona para o home
-//        } catch (EstoqueInsuficienteException e) {  // Captura a EstoqueInsuficienteException
-//            redirectAttributes.addFlashAttribute("erro", e.getMessage());
-//            return "redirect:/";  // Retorna para a página inicial com erro
-//        } catch (Exception e) {  // Captura outras exceções genéricas
-//            redirectAttributes.addFlashAttribute("erro", "Erro ao criar pedido: " + e.getMessage());
-//            return "redirect:/";  // Retorna para a página inicial com erro
-//        }
-//    }
+    @GetMapping("/meuspedidos")
+    public String meusPedidos(Model model) {
+        // Recupera o email do usuário logado
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        // Busca o cliente no banco de dados com o email
+        Cliente cliente = clienteRepository.findByEmailCliente(email);
+
+        if (cliente == null) {
+            return "redirect:/carrinho?erro=Cliente não encontrado";
+        }
+
+        // Busca os pedidos do cliente
+        List<Pedido> pedidos = pedidoService.findByCliente_idCliente(cliente.getIdCliente());
+
+        DecimalFormat decimalFormat = new DecimalFormat("R$ #,##0.00");
+
+        // Busca os PedidoHasProduto do cliente
+        List<PedidoHasProduto> pedidoHasProdutos = pedidoService.findByPedido_Cliente_idCliente(cliente.getIdCliente());
+
+        // Adiciona as listas ao modelo para Thymeleaf
+        model.addAttribute("pedidos", pedidos);
+        model.addAttribute("pedidoHasProdutos", pedidoHasProdutos);
+        model.addAttribute("content", "meuspedidos");
+        return "layouts/main"; // Retorna o layout principal
+    }
+
 }
