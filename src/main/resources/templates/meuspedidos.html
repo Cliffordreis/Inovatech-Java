@@ -10,7 +10,7 @@
                             <h4 class="mb-0" th:text="'Pedido: ' + ${pedido.idPedido}"></h4>
                             <!-- Botões alinhados à direita -->
                             <div class="ms-auto">
-                                <button class="btn btn-transparent">Detalhes</button>
+                                <a th:href="@{/meuspedidos/{id}(id=${pedido.idPedido})}"><button class="btn btn-transparent">Detalhes</button></a>
                                 <button
                                         class="btn btn-transparent ms-3"
                                         type="button"

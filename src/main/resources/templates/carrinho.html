@@ -41,7 +41,7 @@
                 <td>
                     <form th:action="@{/carrinho/remover}" method="post">
                         <input type="hidden" name="produtoId" th:value="${item.produtoId}">
-                        <button class="btn btn-danger btn-sm" type="submit">Remover</button>
+                        <button class="btn btn-transparent btn-sm" type="submit">Remover</button>
                     </form>
                 </td>
             </tr>
@@ -50,7 +50,7 @@
         <hr>
         <h2 class="text-end">Total: <span th:text="'R$: ' + ${total}"></span></h2>
         <form th:action="@{/carrinho/finalizar}" method="post" class="text-end">
-            <button class="btn btn-success" type="submit">Finalizar Pedido</button>
+            <button class="btn btn-transparent" type="submit">Finalizar Pedido</button>
         </form>
     </div>
 </div>
