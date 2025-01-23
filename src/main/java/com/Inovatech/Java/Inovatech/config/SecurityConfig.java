@@ -24,7 +24,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/carrinho", "/carrinho/adicionar", "/carrinho/remover", "/carrinho/alterarQuantidade", "/logout", "/login",
+                .requestMatchers("/", "/test-rabbitmq", "/carrinho", "/carrinho/adicionar", "/carrinho/remover", "/carrinho/alterarQuantidade", "/logout", "/login",
                         "/cadastro", "/assets/**", "/img/**", "/js/**", "/css/**")
                 .permitAll() // Essas rotas não exigem autenticação
                 .anyRequest().authenticated() // Exige autenticação para o restante

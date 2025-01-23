@@ -14,6 +14,10 @@ public class StatusPedido {
     @Column(name = "StatusPedidoDescricao")
     private LocalDateTime statusPedidoDescricao;
 
+    @Column(name = "StatusDataHora")
+    private LocalDateTime statusDataHota;
+
+
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "Pedido_idPedido", referencedColumnName = "idPedido"),
@@ -22,6 +26,7 @@ public class StatusPedido {
     private Pedido pedido;
 
     // Getters e Setters
+
     public Integer getIdStatusPedido() {
         return idStatusPedido;
     }
@@ -36,6 +41,14 @@ public class StatusPedido {
 
     public void setStatusPedidoDescricao(LocalDateTime statusPedidoDescricao) {
         this.statusPedidoDescricao = statusPedidoDescricao;
+    }
+
+    public LocalDateTime getStatusDataHota() {
+        return statusDataHota;
+    }
+
+    public void setStatusDataHota(LocalDateTime statusDataHota) {
+        this.statusDataHota = statusDataHota;
     }
 
     public Pedido getPedido() {

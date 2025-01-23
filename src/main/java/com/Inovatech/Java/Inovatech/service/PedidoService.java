@@ -35,6 +35,17 @@ public class PedidoService {
         Cliente cliente = clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
 
+        // Verificar o estoque antes de criar o pedido
+        for (CarrinhoItem item : carrinho) {
+            Produto produto = produtoRepository.findById(item.getProdutoId())
+                    .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+
+            // Verifica se há estoque suficiente antes de criar o pedido
+            if (produto.getProdutoQuantidade() < item.getQuantidade()) {
+                throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getProdutoDescricao());
+            }
+        }
+
         // Criação do pedido
         Pedido pedido = new Pedido();
         pedido.setCliente(cliente);
@@ -48,11 +59,6 @@ public class PedidoService {
         for (CarrinhoItem item : carrinho) {
             Produto produto = produtoRepository.findById(item.getProdutoId())
                     .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
-
-            // Verifica se há estoque suficiente
-            if (produto.getProdutoQuantidade() < item.getQuantidade()) {
-                throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getProdutoDescricao());
-            }
 
             // Criação da associação do produto com o pedido
             PedidoHasProduto pedidoHasProduto = new PedidoHasProduto();
@@ -74,10 +80,15 @@ public class PedidoService {
             // Salvar a associação
             pedidoHasProdutoRepository.save(pedidoHasProduto);
 
+            // Atualizando a quantidade do estoque
+            produto.setProdutoQuantidade(produto.getProdutoQuantidade() - item.getQuantidade());
+            produtoRepository.save(produto);  // Atualiza o produto com a nova quantidade
         }
 
         return pedido;
     }
+
+
 
 
     private BigDecimal calcularTotalCarrinho(List<CarrinhoItem> carrinho) {
