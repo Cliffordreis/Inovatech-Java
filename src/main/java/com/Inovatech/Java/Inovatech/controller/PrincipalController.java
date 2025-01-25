@@ -1,17 +1,8 @@
 package com.Inovatech.Java.Inovatech.controller;
 
-import com.Inovatech.Java.Inovatech.entity.Cliente;
-import com.Inovatech.Java.Inovatech.entity.Pedido;
-import com.Inovatech.Java.Inovatech.exception.EstoqueInsuficienteException;
-import com.Inovatech.Java.Inovatech.repositories.ClienteRepository;
-import com.Inovatech.Java.Inovatech.service.PedidoService;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PrincipalController {

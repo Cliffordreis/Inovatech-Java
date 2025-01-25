@@ -1,6 +1,6 @@
 package com.Inovatech.Java.Inovatech.repositories;
 
-import com.Inovatech.Java.Inovatech.entity.Pedido;
+import com.Inovatech.Java.Inovatech.model.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

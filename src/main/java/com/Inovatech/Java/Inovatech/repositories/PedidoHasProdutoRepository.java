@@ -1,6 +1,6 @@
 package com.Inovatech.Java.Inovatech.repositories;
 
-import com.Inovatech.Java.Inovatech.entity.PedidoHasProduto;
+import com.Inovatech.Java.Inovatech.model.PedidoHasProduto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

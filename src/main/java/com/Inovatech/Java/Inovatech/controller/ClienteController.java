@@ -1,6 +1,6 @@
 package com.Inovatech.Java.Inovatech.controller;
 
-import com.Inovatech.Java.Inovatech.entity.Cliente;
+import com.Inovatech.Java.Inovatech.model.Cliente;
 import com.Inovatech.Java.Inovatech.service.CadastroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

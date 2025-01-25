@@ -1,9 +1,24 @@
 <div class="container-fluid d-flex justify-content-center my-4" data-bs-theme="dark">
     <div id="cad" class="card col-12 col-sm-10 col-md-8 col-lg-6 p-3 mx-auto">
-        <h1>Status do Pedido</h1>
-        <hr>
         <div th:if="${pedido != null}">
+            <h1>Status do Pedido</h1>
             <p>ID do Pedido: <span th:text="${pedido.idPedido}"></span></p>
+            <hr>
+        </div>
+
+        <div th:if="${statuscache != null}">
+            <!-- Exibindo imagem apenas para o último status -->
+            <div th:if="${statuscache.size() > 0}">
+                <img class="mx-auto img-fluid" th:src="@{/img/{id}.png(id=${statuscache[statuscache.size() - 1].statusDescricao})}">
+            </div>
+
+            <!-- Exibindo todos os status abaixo da imagem -->
+            <span th:each="status : ${statuscache}">
+                <div class="m-2 d-flex justify-content-between">
+                    <h5 class="m-2" th:text="'Status: ' + ${status.statusDescricao}"></h5>
+                    <h5 class="m-2" th:text="'Data: ' + ${status.ultimaAtualizacao}"></h5>
+                </div>
+            </span>
         </div>
     </div>
 </div>

@@ -4,8 +4,8 @@
     </div>
 </div>
 
-<div class="container-fluid d-flex justify-content-center my-5" data-bs-theme="dark">
-    <div id="cad" class="card col-auto p-3">
+<div class="container-fluid d-flex justify-content-center my-4" data-bs-theme="dark">
+    <div id="cad" class="card col-12 col-sm-12 col-md-8 col-lg-6 p-3 mx-auto">
         <h1 class="text-center">Seu Carrinho</h1>
         <table class=" table-hover align-middle text-center">
             <thead>
@@ -30,9 +30,9 @@
                 <td>
                     <form th:action="@{/carrinho/alterarQuantidade}" method="post" class="d-inline">
                         <input type="hidden" name="produtoId" th:value="${item.produtoId}">
-                        <button class="btn btn-transparent" type="submit" name="quantidade" value="decrease">-</button>
+                        <button class="btn btn-sm btn-transparent" type="submit" name="quantidade" value="decrease">-</button>
                         <span class="mx-2" th:text="${item.quantidade}"></span>
-                        <button class="btn btn-transparent" type="submit" name="quantidade" value="increase">+</button>
+                        <button class="btn btn-sm btn-transparent" type="submit" name="quantidade" value="increase">+</button>
                     </form>
                 </td>
                 <!-- Subtotal -->

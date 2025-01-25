@@ -1,19 +1,19 @@
 package com.Inovatech.Java.Inovatech.controller;
 
-import com.Inovatech.Java.Inovatech.entity.Cliente;
-import com.Inovatech.Java.Inovatech.entity.Pedido;
-import com.Inovatech.Java.Inovatech.entity.PedidoHasProduto;
+import com.Inovatech.Java.Inovatech.model.Cliente;
+import com.Inovatech.Java.Inovatech.model.Pedido;
+import com.Inovatech.Java.Inovatech.model.PedidoHasProduto;
+import com.Inovatech.Java.Inovatech.model.StatusCache;
 import com.Inovatech.Java.Inovatech.repositories.ClienteRepository;
 import com.Inovatech.Java.Inovatech.service.PedidoService;
+import com.Inovatech.Java.Inovatech.service.StatusCacheService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 @Controller
@@ -62,6 +62,7 @@ public class PedidoController {
 
         Cliente cliente = clienteRepository.findByEmailCliente(email);
         List<Pedido> pedidos = pedidoService.findByCliente_idCliente(cliente.getIdCliente());
+        List<StatusCache> statuscache = StatusCacheService.getStatusByPedidoId(idPedido);
 
         Pedido pedido = pedidos.stream()
                 .filter(p -> p.getIdPedido().equals(idPedido))
@@ -71,7 +72,7 @@ public class PedidoController {
             return "redirect:/"; // Redireciona para a página inicial
         }
 
-        model.addAttribute("pedidos", pedidos);
+        model.addAttribute("statuscache", statuscache);
         model.addAttribute("pedido", pedido);
         model.addAttribute("content", "detalhes");
         return "layouts/main";

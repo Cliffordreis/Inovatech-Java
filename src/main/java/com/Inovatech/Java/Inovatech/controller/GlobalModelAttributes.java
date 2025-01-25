@@ -1,6 +1,6 @@
 package com.Inovatech.Java.Inovatech.controller;
 
-import com.Inovatech.Java.Inovatech.entity.Cliente;
+import com.Inovatech.Java.Inovatech.model.Cliente;
 import com.Inovatech.Java.Inovatech.repositories.ClienteRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

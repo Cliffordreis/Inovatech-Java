@@ -1,7 +1,7 @@
 package com.Inovatech.Java.Inovatech.controller;
 
-import com.Inovatech.Java.Inovatech.entity.CarrinhoItem;
-import com.Inovatech.Java.Inovatech.entity.Cliente;
+import com.Inovatech.Java.Inovatech.dto.CarrinhoItem;
+import com.Inovatech.Java.Inovatech.model.Cliente;
 import com.Inovatech.Java.Inovatech.service.PedidoService; // Importando o serviço
 import com.Inovatech.Java.Inovatech.repositories.ClienteRepository; // Importando o repositório Cliente
 import jakarta.servlet.http.HttpSession;

@@ -1,27 +1,35 @@
 package com.Inovatech.Java.Inovatech.service;
 
-import com.Inovatech.Java.Inovatech.entity.CarrinhoItem;
-import com.Inovatech.Java.Inovatech.entity.Cliente;
-import com.Inovatech.Java.Inovatech.entity.Pedido;
-import com.Inovatech.Java.Inovatech.entity.PedidoHasProduto;
-import com.Inovatech.Java.Inovatech.entity.Produto;
-import com.Inovatech.Java.Inovatech.repositories.ClienteRepository;
-import com.Inovatech.Java.Inovatech.repositories.PedidoRepository;
-import com.Inovatech.Java.Inovatech.repositories.ProdutoRepository;
-import com.Inovatech.Java.Inovatech.repositories.PedidoHasProdutoRepository; // Importando o repositório correto
+import com.Inovatech.Java.Inovatech.dto.CarrinhoItem;
+import com.Inovatech.Java.Inovatech.model.*;
+import com.Inovatech.Java.Inovatech.repositories.*;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PedidoService {
+
+    @Autowired
+    private StatusCacheRepository statusCacheRepository;
 
     private final PedidoRepository pedidoRepository;
     private final ProdutoRepository produtoRepository;
     private final ClienteRepository clienteRepository;
     private final PedidoHasProdutoRepository pedidoHasProdutoRepository;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate; // Para enviar mensagens ao RabbitMQ
+
+    private String statusQueue = "p.pagClif";
+
 
     public PedidoService(PedidoRepository pedidoRepository, ProdutoRepository produtoRepository, ClienteRepository clienteRepository, PedidoHasProdutoRepository pedidoHasProdutoRepository) {
         this.pedidoRepository = pedidoRepository;
@@ -83,10 +91,33 @@ public class PedidoService {
             // Atualizando a quantidade do estoque
             produto.setProdutoQuantidade(produto.getProdutoQuantidade() - item.getQuantidade());
             produtoRepository.save(produto);  // Atualiza o produto com a nova quantidade
+
         }
+
+        //atualizando cache do status
+        StatusCache statusCache = new StatusCache();
+        statusCache.setPedidoId(pedido.getIdPedido());
+        statusCache.setStatusDescricao("Pedido criado!");
+        statusCache.setUltimaAtualizacao(LocalDateTime.now());
+        statusCacheRepository.save(statusCache);
+
+        enviarStatusParaMicroservice(pedido.getIdPedido(), "Pedido Criado");
 
         return pedido;
     }
+
+    private void enviarStatusParaMicroservice(Integer pedidoId, String statusDescricao) {
+        // Cria uma mensagem de status
+        Map<String, Object> mensagem = new HashMap<>();
+        mensagem.put("pedidoId", pedidoId);
+        mensagem.put("statusDescricao", statusDescricao);
+        mensagem.put("ultimaAtualizacao", LocalDateTime.now());
+
+        // Publica a mensagem no RabbitMQ
+        rabbitTemplate.convertAndSend(statusQueue, mensagem);
+    }
+
+
 
 
 

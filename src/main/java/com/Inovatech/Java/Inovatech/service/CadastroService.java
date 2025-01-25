@@ -1,6 +1,6 @@
 package com.Inovatech.Java.Inovatech.service;
 
-import com.Inovatech.Java.Inovatech.entity.Cliente;
+import com.Inovatech.Java.Inovatech.model.Cliente;
 import com.Inovatech.Java.Inovatech.repositories.ClienteRepository;
 import org.springframework.stereotype.Service;
 
