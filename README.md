@@ -181,3 +181,16 @@ Em poucas etapas, explicaremos como a compra é feita pela Inovatech.
 - Spring Thymeleaf - para renderizar páginas HTML no servidor.
 - Spring Web - para criar APIs RESTful e manipular requisições HTTP.
 - Spring DevTools - para acelerar o desenvolvimento com hot reload.
+
+# Banco de Dados
+
+- MySQL Connector - para conexão com o banco de dados MySQL.
+- Jackson (Manipulação de JSON)
+- Jackson Databind - para serialização e desserialização de objetos JSON.
+- Jackson Core - núcleo do Jackson para manipulação de JSON.
+- Jackson XML Annotations - suporte a anotações XML.
+- Jackson JSR310 - suporte para manipulação de datas com Java 8+ (Date and Time API).
+  
+# Lombok
+
+- Lombok - para gerar automaticamente métodos como getter, setter, equals, etc., reduzindo código repetitivo.
