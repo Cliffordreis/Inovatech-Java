@@ -32,11 +32,11 @@
                                     <p th:text="'Produto: ' + ${pedidoHasProduto.produto.produtoDescricao}" class="mb-0 me-3"></p>
                                     <img th:src="@{/img/{id}.png(id=${pedidoHasProduto.produto.idProduto})}" height="60px" width="50px" alt="Produto" class="me-3">
                                     <p th:text="'Quantidade: ' + ${pedidoHasProduto.quantidade}" class="mb-0 me-3"></p>
-                                    <p th:text="'Valor R$: ' + ${pedidoHasProduto.produto.produtoValor}" class="mb-0"></p>
+                                    <p th:text="'Valor R$: ' + ${#numbers.formatDecimal(pedidoHasProduto.produto.produtoValor, 2, 'POINT', 2, 'COMMA')}" class="mb-0"></p>
                                 </div>
                                 <hr class="my-2">
                             </div>
-                            <p th:text="'Valor total R$: ' + ${pedido.pedidoValor}" style="font-weight: bold;"></p>
+                            <p th:text="'Valor total R$: ' + ${#numbers.formatDecimal(pedido.pedidoValor, 2, 'POINT', 2, 'COMMA')}" style="font-weight: bold;"></p>
                         </blockquote>
                     </div>
                 </div>

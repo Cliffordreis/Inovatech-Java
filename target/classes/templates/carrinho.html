@@ -25,7 +25,7 @@
                     <span th:text="${item.nome}"></span>
                 </td>
                 <!-- Preço unitário -->
-                <td th:text="'R$: ' + ${item.precoUnitario}"></td>
+                <td th:text="'R$: ' + ${#numbers.formatDecimal(item.precoUnitario, 2, 'POINT', 2, 'COMMA')}"></td>
                 <!-- Quantidade com botões -->
                 <td>
                     <form th:action="@{/carrinho/alterarQuantidade}" method="post" class="d-inline">
@@ -36,7 +36,7 @@
                     </form>
                 </td>
                 <!-- Subtotal -->
-                <td th:text="'R$: ' + ${item.subtotal}"></td>
+                <td th:text="'R$: ' + ${#numbers.formatDecimal(item.subtotal, 2, 'POINT', 2, 'COMMA')}"></td>
                 <!-- Ações -->
                 <td>
                     <form th:action="@{/carrinho/remover}" method="post">
@@ -48,7 +48,7 @@
             </tbody>
         </table>
         <hr>
-        <h2 class="text-end">Total: <span th:text="'R$: ' + ${total}"></span></h2>
+        <h2 class="text-end">Total: <span th:text="'R$: ' + ${#numbers.formatDecimal(total, 2, 'POINT', 2, 'COMMA')}"></span></h2>
         <form th:action="@{/carrinho/finalizar}" method="post" class="text-end">
             <button class="btn btn-transparent" type="submit">Finalizar Pedido</button>
         </form>

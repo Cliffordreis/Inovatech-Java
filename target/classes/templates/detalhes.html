@@ -16,7 +16,7 @@
             <span th:each="status : ${statuscache}">
                 <div class="m-2 d-flex justify-content-between">
                     <h5 class="m-2" th:text="'Status: ' + ${status.statusDescricao}"></h5>
-                    <h5 class="m-2" th:text="'Data: ' + ${status.ultimaAtualizacao}"></h5>
+                    <h5 class="m-2" th:text="'Data: ' + ${#temporals.format(status.ultimaAtualizacao, 'dd/MM/yyyy HH:mm:ss')}"></h5>
                 </div>
             </span>
         </div>
