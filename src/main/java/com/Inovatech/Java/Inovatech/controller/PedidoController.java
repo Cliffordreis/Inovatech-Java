@@ -21,10 +21,12 @@ public class PedidoController {
 
     private final PedidoService pedidoService;
     private final ClienteRepository clienteRepository;
+    private final StatusCacheService statusCacheService;
 
-    public PedidoController(PedidoService pedidoService, ClienteRepository clienterepository) {
+    public PedidoController(PedidoService pedidoService, ClienteRepository clienterepository, StatusCacheService statusCacheService) {
         this.pedidoService = pedidoService;
         this.clienteRepository = clienterepository;
+        this.statusCacheService = statusCacheService;
     }
 
     @GetMapping("/meuspedidos")
@@ -61,21 +63,30 @@ public class PedidoController {
         String email = authentication.getName();
 
         Cliente cliente = clienteRepository.findByEmailCliente(email);
-        List<Pedido> pedidos = pedidoService.findByCliente_idCliente(cliente.getIdCliente());
-        List<StatusCache> statuscache = StatusCacheService.getStatusByPedidoId(idPedido);
 
+        // Buscar todos os pedidos do cliente
+        List<Pedido> pedidos = pedidoService.findByCliente_idCliente(cliente.getIdCliente());
+
+        // Encontrar o pedido específico com idPedido
         Pedido pedido = pedidos.stream()
                 .filter(p -> p.getIdPedido().equals(idPedido))
                 .findFirst()
                 .orElse(null);
+
         if (pedido == null) {
-            return "redirect:/"; // Redireciona para a página inicial
+            return "redirect:/"; // Redireciona para a página inicial se o pedido não for encontrado
         }
 
+        // Agora buscamos o StatusCache baseado no objeto Pedido
+        List<StatusCache> statuscache = statusCacheService.getStatusByPedido(pedido);
+
+        // Adicionando os atributos ao modelo
         model.addAttribute("statuscache", statuscache);
         model.addAttribute("pedido", pedido);
         model.addAttribute("content", "detalhes");
-        return "layouts/main";
+
+        return "layouts/main";  // Retorna a view com os detalhes
     }
+
 
 }

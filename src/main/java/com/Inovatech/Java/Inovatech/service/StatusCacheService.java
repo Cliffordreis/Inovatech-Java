@@ -1,5 +1,6 @@
 package com.Inovatech.Java.Inovatech.service;
 
+import com.Inovatech.Java.Inovatech.model.Pedido;
 import com.Inovatech.Java.Inovatech.model.StatusCache;
 import com.Inovatech.Java.Inovatech.repositories.StatusCacheRepository;
 import org.springframework.stereotype.Service;
@@ -9,14 +10,17 @@ import java.util.List;
 @Service
 public class StatusCacheService {
 
-    private static StatusCacheRepository statusCacheRepository;
+    private final StatusCacheRepository statusCacheRepository;
 
+    // Injeção de dependência via o construtor
     public StatusCacheService(StatusCacheRepository statusCacheRepository) {
-        StatusCacheService.statusCacheRepository = statusCacheRepository;
+        this.statusCacheRepository = statusCacheRepository;
     }
 
-    public static List<StatusCache> getStatusByPedidoId(Integer pedidoId) {
-        return statusCacheRepository.findAllByPedidoId(pedidoId);
+    // Método para buscar o StatusCache por Pedido
+    public List<StatusCache> getStatusByPedido(Pedido pedido) {
+        return statusCacheRepository.findAllByPedidoId(pedido);  // Usando o objeto Pedido
     }
 }
+
 

@@ -5,7 +5,6 @@ import com.Inovatech.Java.Inovatech.model.*;
 import com.Inovatech.Java.Inovatech.repositories.*;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -96,7 +95,7 @@ public class PedidoService {
 
         //atualizando cache do status
         StatusCache statusCache = new StatusCache();
-        statusCache.setPedidoId(pedido.getIdPedido());
+        statusCache.setPedidoId(pedido);
         statusCache.setStatusDescricao("Pedido criado!");
         statusCache.setUltimaAtualizacao(LocalDateTime.now());
         statusCacheRepository.save(statusCache);

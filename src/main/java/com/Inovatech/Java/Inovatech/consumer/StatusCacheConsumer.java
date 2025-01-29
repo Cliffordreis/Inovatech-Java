@@ -20,8 +20,13 @@ public class StatusCacheConsumer {
         System.out.println("Mensagem recebida do statuspedido: " + statusCache);
 
         // Salvar o status na tabela StatusCache
-        statusCacheRepository.save(statusCache);
-        System.out.println("Status salvo na tabela StatusCache.");
+        try {
+            statusCacheRepository.save(statusCache);
+            System.out.println("Status salvo na tabela StatusCache.");
+        } catch (Exception e) {
+            System.out.println("Status não salvo " + e);
+            throw new RuntimeException(e);
+        }
     }
 }
 

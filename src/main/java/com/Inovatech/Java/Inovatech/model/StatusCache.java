@@ -1,5 +1,9 @@
 package com.Inovatech.Java.Inovatech.model;
 
+import com.Inovatech.Java.Inovatech.deserializer.PedidoDeserializer;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,17 +19,20 @@ import java.time.LocalDateTime;
 public class StatusCache {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Aqui você configura o auto-increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "pedidoId", nullable = false)
-    private Integer pedidoId;
+    @ManyToOne
+    @JoinColumn(name = "pedidoId", referencedColumnName = "idPedido", nullable = false)  // Correção aqui
+    @JsonDeserialize(using = PedidoDeserializer.class) // Aplica o deserializador personalizado
+    private Pedido pedidoId;  // Relacionamento com Pedido
 
     @Column(name = "statusDescricao", nullable = false)
     private String statusDescricao;
 
     @Column(name = "ultimaAtualizacao", nullable = false)
     private LocalDateTime ultimaAtualizacao;
+
 
 }
 
