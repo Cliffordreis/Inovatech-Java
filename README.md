@@ -25,12 +25,14 @@ Este repositório contém os microservices do sistema Inovatech:
 - Descrição: Serviço principal 
 
 ## Como executar
-Cada microservice tem de ser executado individualmente, assim como execusão de endpoints post nos endereços certos.
+Todos os projetos estão funcionando no **Java 17**, cada microservice tem de ser executado individualmente, assim como execusão de endpoints post nos endereços certos.
 
-*Loja principal Inovatech: http://localhost:8080*
+Todos os arquivos foram criados no Intellij, com excessão do micro serviço `email` (situação no dispositivo de quem desenvolveu), porém totalmente compatível com o Intellij.
+
+*Serviço principal: Inovatech: http://localhost:8080*
 
 # Sobre:
->  A Inovatech é uma loja especializada na venda de eletrônicos. Esta documentação descreve o funcionamento da loja, incluindo informações sobre produtos, gerenciamento de pedidos e controle de endpoints.
+A Inovatech é uma loja especializada na venda de eletrônicos. Esta documentação descreve o funcionamento da loja, incluindo informações sobre produtos, gerenciamento de pedidos e controle de endpoints.
 
 # Modelo Lógico:
 ![modelo logico inovatech](https://github.com/user-attachments/assets/04f006f4-a795-4ad7-aacc-311d1b7e1b83)
