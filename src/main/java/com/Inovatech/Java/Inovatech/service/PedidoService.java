@@ -28,7 +28,7 @@ public class PedidoService {
     private RabbitTemplate rabbitTemplate; // Para enviar mensagens ao RabbitMQ
 
     private String statusQueue = "p.pagClif";
-
+    private String PedidoQueue = "EmailPedidoCli";
 
     public PedidoService(PedidoRepository pedidoRepository, ProdutoRepository produtoRepository, ClienteRepository clienteRepository, PedidoHasProdutoRepository pedidoHasProdutoRepository) {
         this.pedidoRepository = pedidoRepository;
@@ -101,7 +101,7 @@ public class PedidoService {
         statusCacheRepository.save(statusCache);
 
         enviarStatusParaMicroservice(pedido.getIdPedido(), "Pedido Criado");
-
+        enviarPedidoParaFila(pedido, carrinho, cliente.getEmailCliente(), cliente.getNomeCliente(), cliente.getSobrenomeCliente());
         return pedido;
     }
 
@@ -115,6 +115,34 @@ public class PedidoService {
         // Publica a mensagem no RabbitMQ
         rabbitTemplate.convertAndSend(statusQueue, mensagem);
     }
+
+    private void enviarPedidoParaFila(Pedido pedido, List<CarrinhoItem> carrinho, String emailCliente,String nomeCliente, String sobrenomeCLiente) {
+        // Criando a estrutura da mensagem
+        Map<String, Object> mensagem = new HashMap<>();
+        mensagem.put("nome", nomeCliente);
+        mensagem.put("sobrenome", sobrenomeCLiente);
+        mensagem.put("email", emailCliente);
+        mensagem.put("idPedido", pedido.getIdPedido());
+        mensagem.put("valorTotal", pedido.getPedidoValor());
+        mensagem.put("clienteId", pedido.getCliente().getIdCliente());
+        mensagem.put("dataHora", pedido.getPedidoDataHora());
+
+        // Criando a lista de produtos
+        List<Map<String, Object>> produtos = carrinho.stream().map(item -> {
+            Map<String, Object> produtoInfo = new HashMap<>();
+            produtoInfo.put("idProduto", item.getProdutoId());
+            produtoInfo.put("nome", item.getNome());
+            produtoInfo.put("quantidade", item.getQuantidade());
+            produtoInfo.put("precoUnitario", item.getPrecoUnitario());
+            return produtoInfo;
+        }).toList();
+
+        mensagem.put("produtos", produtos);
+
+        // Publicando a mensagem no RabbitMQ
+        rabbitTemplate.convertAndSend(PedidoQueue, mensagem);
+    }
+
 
 
 
