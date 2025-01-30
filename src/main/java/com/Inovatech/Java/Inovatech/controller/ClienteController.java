@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ClienteController {
@@ -26,9 +27,15 @@ public class ClienteController {
     }
 
     @PostMapping("/cadastro")
-    public String cadastrarCliente(Cliente cliente) {
-        cadastroService.cadastrarNovoCliente(cliente); // Chama o serviço para cadastrar com a senha criptografada
-        return "redirect:/login"; // Redireciona para a página de login após o cadastro
+    public String cadastrarCliente(Cliente cliente, RedirectAttributes redirectAttributes) {
+        try {
+            cadastroService.cadastrarNovoCliente(cliente); // Tenta cadastrar o cliente
+            redirectAttributes.addFlashAttribute("successMessage", "Cadastro realizado com sucesso! Faça login para continuar.");
+            return "redirect:/login"; // Redireciona para a página de login
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/cadastro"; // Retorna à página de cadastro com a mensagem de erro
+        }
     }
 
 

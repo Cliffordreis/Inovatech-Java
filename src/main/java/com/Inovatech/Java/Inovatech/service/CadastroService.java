@@ -26,16 +26,26 @@ public class CadastroService {
     }
 
     public void cadastrarNovoCliente(Cliente cliente) {
-        // Criptografar a senha antes de salvar no banco
-        String senhaCriptografada = clienteDetailsService.encodePassword(cliente.getSenhaCliente());
-        cliente.setSenhaCliente(senhaCriptografada);  // Define a senha criptografada no cliente
+        // Verifica se o cliente já existe no banco
+        Cliente clienteExistente = clienteRepository.findByEmailCliente(cliente.getEmailCliente());
 
-        clienteRepository.save(cliente);  // Salva o cliente com a senha criptografada no banco de dados
+        if (clienteExistente != null) {
+            throw new IllegalArgumentException("Este e-mail já está cadastrado!");
+        }
+
+        // Criptografa a senha antes de salvar
+        String senhaCriptografada = clienteDetailsService.encodePassword(cliente.getSenhaCliente());
+        cliente.setSenhaCliente(senhaCriptografada);
+
+        // Salva o cliente no banco
+        clienteRepository.save(cliente);
+
+        // Envia e-mail de boas-vindas
         EnviarEmailBoasVindas(cliente.getNomeCliente(), cliente.getSobrenomeCliente(), cliente.getEmailCliente());
     }
 
 
-private void EnviarEmailBoasVindas(String NomeCliente, String SobrenomeCliente, String EmailCliente) {
+    private void EnviarEmailBoasVindas(String NomeCliente, String SobrenomeCliente, String EmailCliente) {
     // Cria uma mensagem de status
     Map<String, Object> mensagem = new HashMap<>();
     mensagem.put("nome", NomeCliente);

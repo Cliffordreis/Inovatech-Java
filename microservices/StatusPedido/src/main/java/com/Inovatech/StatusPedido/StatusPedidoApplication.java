@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StatusPedidoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StatusPedidoApplication.class, args);
+		SpringApplication.run(
+				StatusPedidoApplication.class, args);
 	}
 
 }

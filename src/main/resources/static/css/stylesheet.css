@@ -78,3 +78,11 @@ a.d-block.link-body-emphasis.dropdown-toggle:active {
     background-color: transparent !important; /* Mantém o fundo transparente */
 }
 
+.small-alert {
+        border-radius: 0.25rem; /* Bordas mais arredondadas */
+        width: auto; /* Largura automática para que ele se ajuste ao conteúdo */
+        max-width: 30%; /* Limita o tamanho do alerta */
+        margin: 10px auto; /* Centraliza o alerta */
+}
+
+

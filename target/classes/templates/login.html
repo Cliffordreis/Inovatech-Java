@@ -1,5 +1,10 @@
-<div th:if="${param.error}" style="text-align: center;">
+<div th:if="${param.error}" class="alert alert-danger small-alert alert-dismissible fade show text-center">
     <p style="color: red;">Credenciais inválidas. Tente novamente.</p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div th:if="${successMessage}" class="alert alert-success small-alert alert-dismissible fade show text-center">
+    <span th:text="${successMessage}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
 
